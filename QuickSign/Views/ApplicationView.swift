@@ -29,19 +29,19 @@ struct ApplicationView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 50, height: 50)
-                .cornerRadius(10)
+                .cornerRadius(12)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: 12)
                         .stroke(.white, lineWidth: 0.5)
                         .opacity(0.3)
                 )
             
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 1) {
                 Text("App Placeholder")
                     .bold()
-                    .font(.system(size: 17))
+                    .font(.system(size: 16))
                 Text("69.0 • App Size")
-                    .font(.system(size: 13))
+                    .font(.system(size: 16))
                     .foregroundColor(.gray)
             }
             
