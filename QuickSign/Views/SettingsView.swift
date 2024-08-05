@@ -14,7 +14,7 @@ struct SettingsView: View {
                 Section(content: {
                     Text("Placeholder")
                 }, header: {
-                    Image("banner")
+                    Image("Banner")
                         .resizable()
                         .scaledToFill()
                 })
