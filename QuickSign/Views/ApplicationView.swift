@@ -30,6 +30,11 @@ struct ApplicationView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 50, height: 50)
                 .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.white, lineWidth: 0.5)
+                        .opacity(0.3)
+                )
             
             VStack(alignment: .leading, spacing: 2) {
                 Text("App Placeholder")
@@ -37,16 +42,20 @@ struct ApplicationView: View {
                     .font(.system(size: 17))
                 Text("69.0 • App Size")
                     .font(.system(size: 13))
+                    .foregroundColor(.gray)
             }
             
             Spacer()
             
-            Button("Sign") {
+            Button(action: {
                 // Placeholder
+            }) {
+                Text("Sign")
+                    .bold()
+                    .frame(width: 58 , height: 20, alignment: .center)
             }
-            .bold()
-            .buttonBorderShape(.capsule)
             .buttonStyle(.bordered)
+            .cornerRadius(20)
         }
     }
 }
