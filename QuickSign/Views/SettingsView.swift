@@ -9,7 +9,19 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        Text("Placeholder")
+        NavigationView {
+            List {
+                Section(content: {
+                    Text("Placeholder")
+                }, header: {
+                    Image("banner")
+                        .resizable()
+                        .scaledToFill()
+                })
+            }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
