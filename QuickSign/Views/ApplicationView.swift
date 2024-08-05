@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ApplicationView: View {
+    let sig = Signer.shared
+    
     var body: some View {
         NavigationView {
             List {
