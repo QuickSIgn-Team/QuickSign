@@ -18,6 +18,8 @@
 		FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */; };
 		FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED602C6123B400B35B1C /* SettingsView.swift */; };
 		FEA233E42C612A2F006727B1 /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA233E32C612A2F006727B1 /* Signer.swift */; };
+		FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */; };
+		FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C52C618B850087AE12 /* UIAlert++.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
 		FE48ED602C6123B400B35B1C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FEA233E32C612A2F006727B1 /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
+		FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		FEBBC3C52C618B850087AE12 /* UIAlert++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert++.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 		FE0562A52C6035B2008201BA /* QuickSign */ = {
 			isa = PBXGroup;
 			children = (
+				FEBBC3C32C618B6D0087AE12 /* Extensions */,
 				FEA233E22C612A00006727B1 /* Classes */,
 				FEA233E12C6129ED006727B1 /* Views */,
 				FE0562A62C6035B2008201BA /* QuickSignApp.swift */,
@@ -150,8 +155,17 @@
 			isa = PBXGroup;
 			children = (
 				FEA233E32C612A2F006727B1 /* Signer.swift */,
+				FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		FEBBC3C32C618B6D0087AE12 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBC3C52C618B850087AE12 /* UIAlert++.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,6 +308,8 @@
 				FE0562A92C6035B2008201BA /* ContentView.swift in Sources */,
 				FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */,
 				FE0562A72C6035B2008201BA /* QuickSignApp.swift in Sources */,
+				FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */,
+				FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */,
 				FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,12 +471,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuickSign/Preview Content\"";
 				DEVELOPMENT_TEAM = 6X2LMXRYXS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickSign/Info.plist;
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -485,12 +505,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuickSign/Preview Content\"";
 				DEVELOPMENT_TEAM = 6X2LMXRYXS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickSign/Info.plist;
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
