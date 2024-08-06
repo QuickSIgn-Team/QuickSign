@@ -6,6 +6,8 @@ struct DocumentsFolder: Identifiable {
     let ipaName: String
     let ipaSize: String
     let icon: UIImage?
+    let appName: String
+    let appVersion: String
 }
 
 struct ApplicationView: View {
@@ -20,7 +22,7 @@ struct ApplicationView: View {
             List {
                 Section {
                     ForEach(ipas) { ipa in
-                        appStack(fileName: ipa.ipaName, fileSize: ipa.ipaSize, icon: ipa.icon)
+                        appStack(appName: ipa.appName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
                     }
                     .onDelete { indices in
                         for index in indices {
@@ -38,7 +40,7 @@ struct ApplicationView: View {
                             }
                         }
                     }
-                } // mb a footer
+                }
                 .navigationTitle("QuickSign")
                 .navigationBarTitleDisplayMode(.inline)
             }
@@ -88,12 +90,12 @@ struct ApplicationView: View {
                             byteCountFormatter.countStyle = .file
                             let formattedFileSize = byteCountFormatter.string(fromByteCount: Int64(fileSize))
                             
-                            let icon = extractIcon(from: itemPath)
+                            let (appName, appVersion, icon) = extractAppInfo(from: itemPath)
                             
-                            return DocumentsFolder(ipaName: item, ipaSize: formattedFileSize, icon: icon)
+                            return DocumentsFolder(ipaName: item, ipaSize: formattedFileSize, icon: icon, appName: appName ?? item, appVersion: appVersion ?? "Unknown")
                         } catch {
                             UIApplication.shared.alert(title: "Error Getting File Size of the IPA!", body: "Error: \(error.localizedDescription)")
-                            return DocumentsFolder(ipaName: "", ipaSize: "", icon: nil)
+                            return DocumentsFolder(ipaName: item, ipaSize: "Unknown Size", icon: nil, appName: item, appVersion: "Unknown")
                         }
                     }
                 }
@@ -130,7 +132,7 @@ struct ApplicationView: View {
         showDocumentPicker(delegate: documentPickerDelegate!)
     }
     
-    private func extractIcon(from ipaPath: String) -> UIImage? {
+    private func extractAppInfo(from ipaPath: String) -> (appName: String?, appVersion: String?, icon: UIImage?) {
         let fileURL = URL(fileURLWithPath: ipaPath)
         
         let unzipPath = NSTemporaryDirectory() + UUID().uuidString
@@ -150,24 +152,35 @@ struct ApplicationView: View {
             for url in payloadContents {
                 if url.pathExtension == "app" {
                     let appBundleURL = url
-                    let iconFiles = ["AppIcon60x60@2x.png", "AppIcon76x76@2x.png", "AppIcon120x120.png", "AppIcon180x180.png"]
                     
-                    for iconFile in iconFiles {
-                        let iconURL = appBundleURL.appendingPathComponent(iconFile)
-                        if FileManager.default.fileExists(atPath: iconURL.path) {
-                            return UIImage(contentsOfFile: iconURL.path)
-                        }
-                    }
+                    let appName = PlistHelper.extractAppName(from: appBundleURL)
+                    let appVersion = PlistHelper.extractAppVersion(from: appBundleURL)
+                    let icon = extractIcon(from: appBundleURL)
+                    
+                    return (appName, appVersion, icon)
                 }
             }
         } catch {
-            print("Error extracting icon: \(error)")
+            print("Error extracting app info: \(error)")
+        }
+        
+        return (nil, nil, nil)
+    }
+    
+    private func extractIcon(from appBundleURL: URL) -> UIImage? {
+        let iconFiles = ["AppIcon60x60@2x.png", "AppIcon76x76@2x.png", "AppIcon120x120.png", "AppIcon180x180.png"]
+        
+        for iconFile in iconFiles {
+            let iconURL = appBundleURL.appendingPathComponent(iconFile)
+            if FileManager.default.fileExists(atPath: iconURL.path) {
+                return UIImage(contentsOfFile: iconURL.path)
+            }
         }
         
         return nil
     }
     
-    private func appStack(fileName: String, fileSize: String, icon: UIImage?) -> some View {
+    private func appStack(appName: String, appVersion: String, fileSize: String, icon: UIImage?) -> some View {
         HStack {
             if let icon = icon {
                 Image(uiImage: icon)
@@ -194,10 +207,10 @@ struct ApplicationView: View {
             }
             
             VStack(alignment: .leading, spacing: 1) {
-                Text(fileName)
+                Text(appName)
                     .bold()
                     .font(.system(size: 16))
-                Text("69.0 • \(fileSize)")
+                Text("\(appVersion) • \(fileSize)")
                     .font(.system(size: 16))
                     .foregroundColor(.gray)
             }

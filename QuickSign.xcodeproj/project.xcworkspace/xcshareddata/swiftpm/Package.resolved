@@ -1,0 +1,24 @@
+{
+  "originHash" : "c787978ba4ab1dffa804fee58e74284b41a9e1221026b244af18c76634e6391b",
+  "pins" : [
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation",
+      "state" : {
+        "revision" : "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+        "version" : "0.9.19"
+      }
+    },
+    {
+      "identity" : "zsign-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zwsn/zsign-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a7f275fb4830ea48adf536fcddee7d05471970d0"
+      }
+    }
+  ],
+  "version" : 3
+}

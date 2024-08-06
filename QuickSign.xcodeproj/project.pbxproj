@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5DC31BF02C623FE800261B08 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC31BEF2C623FE800261B08 /* AppIconView.swift */; };
+		5DC31BF42C62403000261B08 /* PlistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC31BF32C62403000261B08 /* PlistHelper.swift */; };
+		5DC31BF72C6240C400261B08 /* ZSignApple in Frameworks */ = {isa = PBXBuildFile; productRef = 5DC31BF62C6240C400261B08 /* ZSignApple */; };
+		5DC31BFA2C6240CD00261B08 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 5DC31BF92C6240CD00261B08 /* ZIPFoundation */; };
 		FE0562A72C6035B2008201BA /* QuickSignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0562A62C6035B2008201BA /* QuickSignApp.swift */; };
 		FE0562A92C6035B2008201BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0562A82C6035B2008201BA /* ContentView.swift */; };
 		FE0562AB2C6035B5008201BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE0562AA2C6035B5008201BA /* Assets.xcassets */; };
@@ -41,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5DC31BEF2C623FE800261B08 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
+		5DC31BF32C62403000261B08 /* PlistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlistHelper.swift; path = QuickSign/Views/PlistHelper.swift; sourceTree = SOURCE_ROOT; };
 		FE0562A32C6035B2008201BA /* QuickSign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickSign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE0562A62C6035B2008201BA /* QuickSignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSignApp.swift; sourceTree = "<group>"; };
 		FE0562A82C6035B2008201BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +71,8 @@
 			files = (
 				FE48ED5D2C611DCE00B35B1C /* ZSignApple in Frameworks */,
 				FEF6863B2C61A95400D6B2C4 /* ZSignApple in Frameworks */,
+				5DC31BF72C6240C400261B08 /* ZSignApple in Frameworks */,
+				5DC31BFA2C6240CD00261B08 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +157,7 @@
 				FE0562A82C6035B2008201BA /* ContentView.swift */,
 				FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */,
 				FE48ED602C6123B400B35B1C /* SettingsView.swift */,
+				5DC31BEF2C623FE800261B08 /* AppIconView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,6 +167,7 @@
 			children = (
 				FEA233E32C612A2F006727B1 /* Signer.swift */,
 				FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */,
+				5DC31BF32C62403000261B08 /* PlistHelper.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -189,6 +199,8 @@
 			packageProductDependencies = (
 				FE48ED5C2C611DCE00B35B1C /* ZSignApple */,
 				FEF6863A2C61A95400D6B2C4 /* ZSignApple */,
+				5DC31BF62C6240C400261B08 /* ZSignApple */,
+				5DC31BF92C6240CD00261B08 /* ZIPFoundation */,
 			);
 			productName = QuickSign;
 			productReference = FE0562A32C6035B2008201BA /* QuickSign.app */;
@@ -263,7 +275,8 @@
 			);
 			mainGroup = FE05629A2C6035B2008201BA;
 			packageReferences = (
-				FEF686392C61A95400D6B2C4 /* XCLocalSwiftPackageReference "QuickSign/zsign-ios" */,
+				5DC31BF52C6240C400261B08 /* XCRemoteSwiftPackageReference "zsign-ios" */,
+				5DC31BF82C6240CD00261B08 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = FE0562A42C6035B2008201BA /* Products */;
 			projectDirPath = "";
@@ -308,6 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEA233E42C612A2F006727B1 /* Signer.swift in Sources */,
+				5DC31BF42C62403000261B08 /* PlistHelper.swift in Sources */,
+				5DC31BF02C623FE800261B08 /* AppIconView.swift in Sources */,
 				FE0562A92C6035B2008201BA /* ContentView.swift in Sources */,
 				FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */,
 				FE0562A72C6035B2008201BA /* QuickSignApp.swift in Sources */,
@@ -355,6 +370,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -383,6 +399,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -418,6 +435,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -446,6 +464,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -474,7 +493,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuickSign/Preview Content\"";
@@ -508,7 +529,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuickSign/Preview Content\"";
@@ -654,14 +677,36 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		FEF686392C61A95400D6B2C4 /* XCLocalSwiftPackageReference "QuickSign/zsign-ios" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "QuickSign/zsign-ios";
+/* Begin XCRemoteSwiftPackageReference section */
+		5DC31BF52C6240C400261B08 /* XCRemoteSwiftPackageReference "zsign-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zwsn/zsign-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+		5DC31BF82C6240CD00261B08 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.19;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5DC31BF62C6240C400261B08 /* ZSignApple */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DC31BF52C6240C400261B08 /* XCRemoteSwiftPackageReference "zsign-ios" */;
+			productName = ZSignApple;
+		};
+		5DC31BF92C6240CD00261B08 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DC31BF82C6240CD00261B08 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
 		FE48ED5C2C611DCE00B35B1C /* ZSignApple */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZSignApple;
