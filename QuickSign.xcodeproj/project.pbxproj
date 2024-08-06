@@ -20,6 +20,7 @@
 		FEA233E42C612A2F006727B1 /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA233E32C612A2F006727B1 /* Signer.swift */; };
 		FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */; };
 		FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C52C618B850087AE12 /* UIAlert++.swift */; };
+		FEF6863B2C61A95400D6B2C4 /* ZSignApple in Frameworks */ = {isa = PBXBuildFile; productRef = FEF6863A2C61A95400D6B2C4 /* ZSignApple */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE48ED5D2C611DCE00B35B1C /* ZSignApple in Frameworks */,
+				FEF6863B2C61A95400D6B2C4 /* ZSignApple in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +188,7 @@
 			name = QuickSign;
 			packageProductDependencies = (
 				FE48ED5C2C611DCE00B35B1C /* ZSignApple */,
+				FEF6863A2C61A95400D6B2C4 /* ZSignApple */,
 			);
 			productName = QuickSign;
 			productReference = FE0562A32C6035B2008201BA /* QuickSign.app */;
@@ -260,7 +263,7 @@
 			);
 			mainGroup = FE05629A2C6035B2008201BA;
 			packageReferences = (
-				FE48ED5B2C611DCE00B35B1C /* XCLocalSwiftPackageReference "../zsign-ios" */,
+				FEF686392C61A95400D6B2C4 /* XCLocalSwiftPackageReference "QuickSign/zsign-ios" */,
 			);
 			productRefGroup = FE0562A42C6035B2008201BA /* Products */;
 			projectDirPath = "";
@@ -652,14 +655,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		FE48ED5B2C611DCE00B35B1C /* XCLocalSwiftPackageReference "../zsign-ios" */ = {
+		FEF686392C61A95400D6B2C4 /* XCLocalSwiftPackageReference "QuickSign/zsign-ios" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../zsign-ios";
+			relativePath = "QuickSign/zsign-ios";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		FE48ED5C2C611DCE00B35B1C /* ZSignApple */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ZSignApple;
+		};
+		FEF6863A2C61A95400D6B2C4 /* ZSignApple */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZSignApple;
 		};
