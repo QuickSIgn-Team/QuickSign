@@ -58,7 +58,6 @@ struct SettingsView: View {
         }
     }
     
-    // Function to open a website
     func openWebsite(urlString: String) {
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url)

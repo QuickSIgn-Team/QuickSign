@@ -15,7 +15,6 @@ struct Icon: Identifiable {
 }
 
 struct AppIconView: View {
-    // Define the list of icons using the Icon struct
     let icons = [
         Icon(title: "Standart", icon: "AppIcon", image: "AppIconImage"),
         Icon(title: "Picasso", icon: "Picasso", image: "PicassoImage"),
