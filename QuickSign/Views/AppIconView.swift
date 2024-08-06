@@ -17,13 +17,13 @@ struct Icon: Identifiable {
 struct AppIconView: View {
     let icons = [
         Icon(title: "Standart", icon: "AppIcon", image: "AppIconImage"),
-        Icon(title: "Picasso", icon: "Picasso", image: "PicassoImage"),
-        Icon(title: "Scarlet", icon: "Scarlet", image: "ScarletImage"),
-        Icon(title: "ESign", icon: "ChineseSign", image: "ChineseSignImage"),
-        Icon(title: "GBox", icon: "BoxSign", image: "BoxSignImage"),
-        Icon(title: "AltStore", icon: "AltSign", image: "AltSignImage"),
-        Icon(title: "BRAT", icon: "BratSign", image: "BratSignImage"),
-        Icon(title: "Paint", icon: "ScuffedSign", image: "ScuffedSignImage")
+        Icon(title: "PicassoSign", icon: "Picasso", image: "PicassoImage"),
+        Icon(title: "ScarletSign", icon: "Scarlet", image: "ScarletImage"),
+        Icon(title: "СhineseSign", icon: "ChineseSign", image: "ChineseSignImage"),
+        Icon(title: "GSign", icon: "BoxSign", image: "BoxSignImage"),
+        Icon(title: "AltSign", icon: "AltSign", image: "AltSignImage"),
+        Icon(title: "BRATSign", icon: "BratSign", image: "BratSignImage"),
+        Icon(title: "ScuffedSign", icon: "ScuffedSign", image: "ScuffedSignImage")
     ]
     
     var body: some View {
@@ -35,11 +35,11 @@ struct AppIconView: View {
                     HStack {
                         Image(icon.image)
                             .resizable()
-                            .frame(width: 50, height: 50)
-                            .cornerRadius(8)
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(14)
                             .padding(.trailing, 8)
                         Text(icon.title)
-                            .font(.system(size: 18, weight: .medium))
+                            .font(.system(size: 20, weight: .medium))
                         Spacer()
                     }
                     .padding(.vertical, 8)
