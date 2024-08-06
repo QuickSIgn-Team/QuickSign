@@ -1,9 +1,11 @@
 import SwiftUI
+import ZIPFoundation
 
 struct DocumentsFolder: Identifiable {
     let id = UUID()
     let ipaName: String
     let ipaSize: String
+    let icon: UIImage?
 }
 
 struct ApplicationView: View {
@@ -12,14 +14,13 @@ struct ApplicationView: View {
     @State private var ipas: [DocumentsFolder] = []
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     let fm = FileManager.default
-    let sig = Signer.shared
     
     var body: some View {
         NavigationView {
             List {
                 Section {
                     ForEach(ipas) { ipa in
-                        appStack(fileName: ipa.ipaName, fileSize: ipa.ipaSize)
+                        appStack(fileName: ipa.ipaName, fileSize: ipa.ipaSize, icon: ipa.icon)
                     }
                     .onDelete { indices in
                         for index in indices {
@@ -82,19 +83,18 @@ struct ApplicationView: View {
                             let attr = try FileManager.default.attributesOfItem(atPath: itemPath)
                             fileSize = attr[FileAttributeKey.size] as! UInt64
                             
-                            let dict = attr as NSDictionary
-                            fileSize = dict.fileSize()
+                            let byteCountFormatter = ByteCountFormatter()
+                            byteCountFormatter.allowedUnits = [.useKB, .useMB, .useGB]
+                            byteCountFormatter.countStyle = .file
+                            let formattedFileSize = byteCountFormatter.string(fromByteCount: Int64(fileSize))
+                            
+                            let icon = extractIcon(from: itemPath)
+                            
+                            return DocumentsFolder(ipaName: item, ipaSize: formattedFileSize, icon: icon)
                         } catch {
                             UIApplication.shared.alert(title: "Error Getting File Size of the IPA!", body: "Error: \(error.localizedDescription)")
-                            return DocumentsFolder(ipaName: "", ipaSize: "")
+                            return DocumentsFolder(ipaName: "", ipaSize: "", icon: nil)
                         }
-                        
-                        let byteCountFormatter = ByteCountFormatter()
-                        byteCountFormatter.allowedUnits = [.useKB, .useMB, .useGB]
-                        byteCountFormatter.countStyle = .file
-                        let formattedFileSize = byteCountFormatter.string(fromByteCount: Int64(fileSize))
-                        
-                        return DocumentsFolder(ipaName: item, ipaSize: formattedFileSize)
                     }
                 }
                 
@@ -130,18 +130,68 @@ struct ApplicationView: View {
         showDocumentPicker(delegate: documentPickerDelegate!)
     }
     
-    private func appStack(fileName: String, fileSize: String) -> some View {
+    private func extractIcon(from ipaPath: String) -> UIImage? {
+        let fileURL = URL(fileURLWithPath: ipaPath)
+        
+        let unzipPath = NSTemporaryDirectory() + UUID().uuidString
+        let unzipURL = URL(fileURLWithPath: unzipPath)
+        
+        do {
+            try FileManager.default.createDirectory(at: unzipURL, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.unzipItem(at: fileURL, to: unzipURL)
+            
+            defer {
+                try? FileManager.default.removeItem(at: unzipURL)
+            }
+            
+            let payloadURL = unzipURL.appendingPathComponent("Payload")
+            let payloadContents = try FileManager.default.contentsOfDirectory(at: payloadURL, includingPropertiesForKeys: nil)
+            
+            for url in payloadContents {
+                if url.pathExtension == "app" {
+                    let appBundleURL = url
+                    let iconFiles = ["AppIcon60x60@2x.png", "AppIcon76x76@2x.png", "AppIcon120x120.png", "AppIcon180x180.png"]
+                    
+                    for iconFile in iconFiles {
+                        let iconURL = appBundleURL.appendingPathComponent(iconFile)
+                        if FileManager.default.fileExists(atPath: iconURL.path) {
+                            return UIImage(contentsOfFile: iconURL.path)
+                        }
+                    }
+                }
+            }
+        } catch {
+            print("Error extracting icon: \(error)")
+        }
+        
+        return nil
+    }
+    
+    private func appStack(fileName: String, fileSize: String, icon: UIImage?) -> some View {
         HStack {
-            Image("DefaultIcon")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50, height: 50)
-                .cornerRadius(12)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(.white, lineWidth: 0.5)
-                        .opacity(0.3)
-                )
+            if let icon = icon {
+                Image(uiImage: icon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(.white, lineWidth: 0.5)
+                            .opacity(0.3)
+                    )
+            } else {
+                Image("DefaultIcon")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(.white, lineWidth: 0.5)
+                            .opacity(0.3)
+                    )
+            }
             
             VStack(alignment: .leading, spacing: 1) {
                 Text(fileName)
