@@ -40,9 +40,11 @@ struct ApplicationView: View {
                             }
                         }
                     }
+                } footer: {
+                    if checkFiles() {
+                        Text("You don't have any IPAs imported.")
+                    }
                 }
-                .navigationTitle("QuickSign")
-                .navigationBarTitleDisplayMode(.inline)
             }
             .toolbar {
                 Button(action: {
@@ -59,6 +61,8 @@ struct ApplicationView: View {
                     Image(systemName: "square.and.arrow.down")
                 }
             }
+            .navigationTitle("QuickSign")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
             Task {
@@ -67,7 +71,21 @@ struct ApplicationView: View {
         }
     }
     
+    private func checkFiles() -> Bool {
+        do {
+            if try fm.contentsOfDirectory(atPath: documentsPath).isEmpty {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            return false
+        }
+    }
+    
     private func refreshFiles() async {
+        UIApplication.shared.alert(title: "Loading the directory", body: "Please wait", withButton: false)
+        
         do {
             let folderContents = try fm.contentsOfDirectory(atPath: documentsPath)
             
@@ -90,10 +108,12 @@ struct ApplicationView: View {
                             byteCountFormatter.countStyle = .file
                             let formattedFileSize = byteCountFormatter.string(fromByteCount: Int64(fileSize))
                             
-                            let (appName, appVersion, icon) = extractAppInfo(from: itemPath)
+                            let (appName, appVersion, icon) = await extractAppInfo(from: itemPath)
                             
+                            await UIApplication.shared.dismissAlert(animated: false)
                             return DocumentsFolder(ipaName: item, ipaSize: formattedFileSize, icon: icon, appName: appName ?? item, appVersion: appVersion ?? "Unknown")
                         } catch {
+                            await UIApplication.shared.dismissAlert(animated: false)
                             UIApplication.shared.alert(title: "Error Getting File Size of the IPA!", body: "Error: \(error.localizedDescription)")
                             return DocumentsFolder(ipaName: item, ipaSize: "Unknown Size", icon: nil, appName: item, appVersion: "Unknown")
                         }
@@ -109,6 +129,7 @@ struct ApplicationView: View {
                 return results
             }
         } catch {
+            UIApplication.shared.dismissAlert(animated: false)
             UIApplication.shared.alert(title: "Error Refreshing IPA!", body: "Error: \(error.localizedDescription)")
             self.ipas = []
         }
