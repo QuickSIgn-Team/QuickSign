@@ -22,7 +22,7 @@ struct ApplicationView: View {
             List {
                 Section {
                     ForEach(ipas) { ipa in
-                        appStack(appName: ipa.appName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
+                        appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
                     }
                     .onDelete { indices in
                         for index in indices {
@@ -180,7 +180,7 @@ struct ApplicationView: View {
         return nil
     }
     
-    private func appStack(appName: String, appVersion: String, fileSize: String, icon: UIImage?) -> some View {
+    private func appStack(appName: String, ipaName: String, appVersion: String, fileSize: String, icon: UIImage?) -> some View {
         HStack {
             if let icon = icon {
                 Image(uiImage: icon)
@@ -207,7 +207,7 @@ struct ApplicationView: View {
             }
             
             VStack(alignment: .leading, spacing: 1) {
-                Text(appName)
+                Text("\(ipaName) | \(appName)")
                     .bold()
                     .font(.system(size: 16))
                 Text("\(appVersion) • \(fileSize)")
