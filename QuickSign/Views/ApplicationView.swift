@@ -84,7 +84,7 @@ struct ApplicationView: View {
     }
     
     private func refreshFiles() async {
-        UIApplication.shared.alert(title: "Loading the directory", body: "Please wait", withButton: false)
+        UIApplication.shared.alert(title: "Loading", body: "Please wait", withButton: false)
         
         do {
             let folderContents = try fm.contentsOfDirectory(atPath: documentsPath)

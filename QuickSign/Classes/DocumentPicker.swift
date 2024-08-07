@@ -28,7 +28,7 @@ class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
 }
 
 func showDocumentPicker(delegate: DocumentPickerDelegate) {
-    let fileTypes = ["com.apple.itunes.ipa"]
+    let fileTypes = ["com.apple.itunes.ipa", "com.rsa.pkcs-12", "com.apple.mobileprovision"]
     let documentPicker = UIDocumentPickerViewController(
         documentTypes: fileTypes,
         in: .open
