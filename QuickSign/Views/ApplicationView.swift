@@ -22,7 +22,11 @@ struct ApplicationView: View {
             List {
                 Section {
                     ForEach(ipas) { ipa in
-                        appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
+                        if ipa.ipaName.hasSuffix(".ipa") {
+                            appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
+                        } else if ipa.ipaName.hasSuffix(".p12") || ipa.ipaName.hasSuffix(".mobileprovision") {
+                            Text(ipa.ipaName)
+                        }
                     }
                     .onDelete { indices in
                         for index in indices {
@@ -95,7 +99,7 @@ struct ApplicationView: View {
                         let itemPath = documentsPath + "/" + item
                         var fileSize: UInt64 = 0
                         
-                        guard item.hasSuffix(".ipa") else {
+                        guard item.hasSuffix(".ipa") || item.hasSuffix(".p12") || item.hasSuffix(".mobileprovision") else {
                             return nil
                         }
                         
