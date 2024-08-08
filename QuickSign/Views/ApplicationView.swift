@@ -14,127 +14,102 @@ struct ApplicationView: View {
     @State private var selectedIpaURL: URL?
     @State private var documentPickerDelegate: DocumentPickerDelegate?
     @State private var ipas: [DocumentsFolder] = []
+    @State private var isLoading = false
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-    let fm = FileManager.default
     
     var body: some View {
         NavigationView {
-            List {
-                Section {
-                    ForEach(ipas) { ipa in
-                        if ipa.ipaName.hasSuffix(".ipa") {
-                            appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
-                        } else if ipa.ipaName.hasSuffix(".p12") || ipa.ipaName.hasSuffix(".mobileprovision") {
-                            Text(ipa.ipaName)
-                        }
-                    }
-                    .onDelete { indices in
-                        for index in indices {
-                            if ipas.indices.contains(index) {
-                                let ipaToDelete = ipas[index]
-                                
-                                ipas.remove(at: index)
-                                
-                                let ipaPath = "\(documentsPath)/\(ipaToDelete.ipaName)"
-                                do {
-                                    try fm.removeItem(atPath: ipaPath)
-                                } catch {
-                                    UIApplication.shared.alert(title: "Error Deleting IPA", body: "Error: \(error.localizedDescription)")
+            VStack {
+                if isLoading {
+                    ProgressView("Loading...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                } else {
+                    List {
+                        Section {
+                            ForEach(ipas) { ipa in
+                                if ipa.ipaName.hasSuffix(".ipa") {
+                                    appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
+                                } else {
+                                    Text(ipa.ipaName)
                                 }
                             }
+                            .onDelete(perform: deleteItems)
+                        } footer: {
+                            if ipas.isEmpty {
+                                Text("You don't have any IPAs imported.")
+                            }
                         }
-                    }
-                } footer: {
-                    if checkFiles() {
-                        Text("You don't have any IPAs imported.")
                     }
                 }
             }
             .toolbar {
-                Button(action: {
-                    Task {
-                        await refreshFiles()
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button(action: refreshFiles) {
+                        Image(systemName: "arrow.clockwise")
                     }
-                }) {
-                    Image(systemName: "arrow.clockwise")
                 }
-                
-                Button(action: {
-                    importIpa()
-                }) {
-                    Image(systemName: "square.and.arrow.down")
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: importIpa) {
+                        Image(systemName: "square.and.arrow.down")
+                    }
                 }
             }
             .navigationTitle("QuickSign")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear(perform: refreshFiles)
         }
-        .onAppear {
-            Task {
-                await refreshFiles()
+    }
+    
+    private func deleteItems(at offsets: IndexSet) {
+        for index in offsets {
+            let ipaToDelete = ipas[index]
+            ipas.remove(at: index)
+            let ipaPath = "\(documentsPath)/\(ipaToDelete.ipaName)"
+            do {
+                try FileManager.default.removeItem(atPath: ipaPath)
+            } catch {
+                print("Error deleting file: \(error.localizedDescription)")
             }
         }
     }
     
-    private func checkFiles() -> Bool {
-        do {
-            if try fm.contentsOfDirectory(atPath: documentsPath).isEmpty {
-                return true
-            } else {
-                return false
-            }
-        } catch {
-            return false
+    private func refreshFiles() {
+        isLoading = true
+        Task {
+            await fetchFiles()
+            isLoading = false
         }
     }
     
-    private func refreshFiles() async {
-        UIApplication.shared.alert(title: "Loading", body: "Please wait", withButton: false)
-        
+    private func fetchFiles() async {
         do {
-            let folderContents = try fm.contentsOfDirectory(atPath: documentsPath)
-            
-            self.ipas = try await withThrowingTaskGroup(of: DocumentsFolder?.self) { group in
-                for item in folderContents {
+            let folderContents = try FileManager.default.contentsOfDirectory(atPath: documentsPath)
+            let filteredContents = folderContents.filter { $0.hasSuffix(".ipa") || $0.hasSuffix(".p12") || $0.hasSuffix(".mobileprovision") }
+
+            self.ipas = await withTaskGroup(of: DocumentsFolder?.self) { group in
+                for item in filteredContents {
                     group.addTask {
-                        let itemPath = documentsPath + "/" + item
-                        var fileSize: UInt64 = 0
-                        
-                        guard item.hasSuffix(".ipa") || item.hasSuffix(".p12") || item.hasSuffix(".mobileprovision") else {
-                            return nil
-                        }
-                        
+                        let itemPath = "\(documentsPath)/\(item)"
                         do {
-                            let attr = try FileManager.default.attributesOfItem(atPath: itemPath)
-                            fileSize = attr[FileAttributeKey.size] as! UInt64
-                            
-                            let byteCountFormatter = ByteCountFormatter()
-                            byteCountFormatter.allowedUnits = [.useKB, .useMB, .useGB]
-                            byteCountFormatter.countStyle = .file
-                            let formattedFileSize = byteCountFormatter.string(fromByteCount: Int64(fileSize))
-                            
+                            let attributes = try FileManager.default.attributesOfItem(atPath: itemPath)
+                            let fileSize = attributes[.size] as! UInt64
+                            let formattedFileSize = ByteCountFormatter().string(fromByteCount: Int64(fileSize))
                             let (appName, appVersion, icon) = await extractAppInfo(from: itemPath)
-                            
-                            await UIApplication.shared.dismissAlert(animated: false)
                             return DocumentsFolder(ipaName: item, ipaSize: formattedFileSize, icon: icon, appName: appName ?? item, appVersion: appVersion ?? "Unknown")
                         } catch {
-                            await UIApplication.shared.dismissAlert(animated: false)
-                            UIApplication.shared.alert(title: "Error Getting File Size of the IPA!", body: "Error: \(error.localizedDescription)")
-                            return DocumentsFolder(ipaName: item, ipaSize: "Unknown Size", icon: nil, appName: item, appVersion: "Unknown")
+                            print("Error fetching file attributes: \(error.localizedDescription)")
+                            return nil
                         }
                     }
                 }
-                
-                var results: [DocumentsFolder] = []
-                for try await ipa in group {
-                    if let ipa = ipa {
-                        results.append(ipa)
+                return await group.reduce(into: [DocumentsFolder]()) { result, folder in
+                    if let folder = folder {
+                        result.append(folder)
                     }
                 }
-                return results
             }
         } catch {
-            UIApplication.shared.dismissAlert(animated: false)
-            UIApplication.shared.alert(title: "Error Refreshing IPA!", body: "Error: \(error.localizedDescription)")
+            print("Error reading directory: \(error.localizedDescription)")
             self.ipas = []
         }
     }
@@ -144,12 +119,9 @@ struct ApplicationView: View {
             self.selectedIpaURL = selectedURL
             
             do {
-                let destinationURL = URL(fileURLWithPath: documentsPath).appendingPathComponent(selectedIpaURL!.lastPathComponent)
-                try fm.copyItem(at: selectedIpaURL!, to: destinationURL)
-                
-                Task {
-                    await refreshFiles()
-                }
+                let destinationURL = URL(fileURLWithPath: documentsPath).appendingPathComponent(selectedURL!.lastPathComponent)
+                try FileManager.default.copyItem(at: selectedURL!, to: destinationURL) // FORCE UNWAP RRAHHH
+                refreshFiles()
             } catch {
                 UIApplication.shared.alert(title: "Error Importing IPA!", body: "Error: \(error.localizedDescription)")
             }
@@ -157,7 +129,7 @@ struct ApplicationView: View {
         showDocumentPicker(delegate: documentPickerDelegate!)
     }
     
-    private func extractAppInfo(from ipaPath: String) -> (appName: String?, appVersion: String?, icon: UIImage?) {
+    private func extractAppInfo(from ipaPath: String) async -> (appName: String?, appVersion: String?, icon: UIImage?) {
         let fileURL = URL(fileURLWithPath: ipaPath)
         
         let unzipPath = NSTemporaryDirectory() + UUID().uuidString
@@ -176,12 +148,9 @@ struct ApplicationView: View {
             
             for url in payloadContents {
                 if url.pathExtension == "app" {
-                    let appBundleURL = url
-                    
-                    let appName = PlistHelper.extractAppName(from: appBundleURL)
-                    let appVersion = PlistHelper.extractAppVersion(from: appBundleURL)
-                    let icon = extractIcon(from: appBundleURL)
-                    
+                    let appName = PlistHelper.extractAppName(from: url)
+                    let appVersion = PlistHelper.extractAppVersion(from: url)
+                    let icon = extractIcon(from: url)
                     return (appName, appVersion, icon)
                 }
             }
@@ -197,8 +166,8 @@ struct ApplicationView: View {
         
         for iconFile in iconFiles {
             let iconURL = appBundleURL.appendingPathComponent(iconFile)
-            if FileManager.default.fileExists(atPath: iconURL.path) {
-                return UIImage(contentsOfFile: iconURL.path)
+            if FileManager.default.fileExists(atPath: iconURL.path), let image = UIImage(contentsOfFile: iconURL.path) {
+                return image
             }
         }
         
@@ -241,13 +210,8 @@ struct ApplicationView: View {
             }
             
             Spacer()
-            
-            Button(action: {
-                // Placeholder
-            }) {
-                Text("Sign")
-                    .bold()
-                    .frame(width: 58 , height: 20, alignment: .center)
+            Button("Sign") {
+                // sign action here...
             }
             .buttonStyle(.bordered)
             .cornerRadius(20)
