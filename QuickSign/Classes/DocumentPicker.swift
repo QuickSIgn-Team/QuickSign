@@ -30,8 +30,23 @@ class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
 }
 
 
-func showDocumentPicker(delegate: DocumentPickerDelegate) {
-    let fileTypes = ["com.apple.itunes.ipa", "com.rsa.pkcs-12", "com.apple.mobileprovision"]
+func showDocumentPickerIPA(delegate: DocumentPickerDelegate) {
+    let fileTypes = ["com.apple.itunes.ipa"]
+    let documentPicker = UIDocumentPickerViewController(
+        documentTypes: fileTypes,
+        in: .open
+    )
+    documentPicker.allowsMultipleSelection = false
+    documentPicker.delegate = delegate
+    UIApplication.shared.windows.first?.rootViewController?.present(
+        documentPicker,
+        animated: true,
+        completion: nil
+    )
+}
+
+func showDocumentPickerCert(delegate: DocumentPickerDelegate) {
+    let fileTypes = ["com.rsa.pkcs-12", "com.apple.mobileprovision"]
     let documentPicker = UIDocumentPickerViewController(
         documentTypes: fileTypes,
         in: .open

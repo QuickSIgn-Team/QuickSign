@@ -14,6 +14,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Apps", systemImage: "square.stack.3d.up.fill")
                 }
+            CertificatesView()
+                .tabItem {
+                    Label("Certifcates", systemImage: "signature")
+                }
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")

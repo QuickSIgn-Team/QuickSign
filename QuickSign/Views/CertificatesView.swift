@@ -1,19 +1,21 @@
-import SwiftUI
-import ZIPFoundation
+//
+//  CertificatesView.swift
+//  QuickSign
+//
+//  Created by haxi0 on 09.08.2024.
+//
 
-struct DocumentsFolderIPA: Identifiable {
+import SwiftUI
+
+struct DocumentsFolderCert: Identifiable {
     let id = UUID()
-    let ipaName: String
-    let ipaSize: String
-    let icon: UIImage?
-    let appName: String
-    let appVersion: String
+    let certName: String
 }
 
-struct ApplicationView: View {
-    @State private var selectedIpaURL: URL?
+struct CertificatesView: View {
+    @State private var selectedCertURL: URL?
     @State private var documentPickerDelegate: DocumentPickerDelegate?
-    @State private var ipas: [DocumentsFolderIPA] = []
+    @State private var certs: [DocumentsFolderCert] = []
     @State private var isLoading = false
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     
@@ -22,15 +24,15 @@ struct ApplicationView: View {
             VStack {
                 List {
                     Section {
-                        ForEach(ipas) { ipa in
-                            if ipa.ipaName.hasSuffix(".ipa") {
-                                appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
+                        ForEach(certs) { cert in
+                            if cert.certName.hasSuffix(".p12") || cert.certName.hasSuffix(".mobileprovision") {
+                                Text(cert.certName)
                             }
                         }
                         .onDelete(perform: deleteItems)
                     } footer: {
-                        if ipas.isEmpty && !isLoading {
-                            Text("You don't have any IPAs imported.")
+                        if certs.isEmpty && !isLoading {
+                            Text("You don't have any Certificates imported.")
                         }
                     }
                 }
@@ -42,7 +44,7 @@ struct ApplicationView: View {
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: importIpa) {
+                    Button(action: importCert) {
                         Image(systemName: "square.and.arrow.down")
                     }
                 }
@@ -66,7 +68,7 @@ struct ApplicationView: View {
                 }
             )
             
-            .navigationTitle("Applications")
+            .navigationTitle("Certificates")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: refreshFiles)
         }
@@ -74,11 +76,11 @@ struct ApplicationView: View {
     
     private func deleteItems(at offsets: IndexSet) {
         for index in offsets {
-            let ipaToDelete = ipas[index]
-            ipas.remove(at: index)
-            let ipaPath = "\(documentsPath)/\(ipaToDelete.ipaName)"
+            let certToDelete = certs[index]
+            certs.remove(at: index)
+            let certPath = "\(documentsPath)/\(certToDelete.certName)"
             do {
-                try FileManager.default.removeItem(atPath: ipaPath)
+                try FileManager.default.removeItem(atPath: certPath)
             } catch {
                 print("Error deleting file: \(error.localizedDescription)")
             }
@@ -96,25 +98,15 @@ struct ApplicationView: View {
     private func fetchFiles() async {
         do {
             let folderContents = try FileManager.default.contentsOfDirectory(atPath: documentsPath)
-            let filteredContents = folderContents.filter { $0.hasSuffix(".ipa") || $0.hasSuffix(".p12") || $0.hasSuffix(".mobileprovision") }
+            let filteredContents = folderContents.filter { $0.hasSuffix(".p12") || $0.hasSuffix(".mobileprovision") }
 
-            self.ipas = await withTaskGroup(of: DocumentsFolderIPA?.self) { group in
+            self.certs = await withTaskGroup(of: DocumentsFolderCert?.self) { group in
                 for item in filteredContents {
                     group.addTask {
-                        let itemPath = "\(documentsPath)/\(item)"
-                        do {
-                            let attributes = try FileManager.default.attributesOfItem(atPath: itemPath)
-                            let fileSize = attributes[.size] as! UInt64
-                            let formattedFileSize = ByteCountFormatter().string(fromByteCount: Int64(fileSize))
-                            let (appName, appVersion, icon) = await extractAppInfo(from: itemPath)
-                            return DocumentsFolderIPA(ipaName: item, ipaSize: formattedFileSize, icon: icon, appName: appName ?? item, appVersion: appVersion ?? "Unknown")
-                        } catch {
-                            print("Error fetching file attributes: \(error.localizedDescription)")
-                            return nil
-                        }
+                        return DocumentsFolderCert(certName: item)
                     }
                 }
-                return await group.reduce(into: [DocumentsFolderIPA]()) { result, folder in
+                return await group.reduce(into: [DocumentsFolderCert]()) { result, folder in
                     if let folder = folder {
                         result.append(folder)
                     }
@@ -122,71 +114,26 @@ struct ApplicationView: View {
             }
         } catch {
             print("Error reading directory: \(error.localizedDescription)")
-            self.ipas = []
+            self.certs = []
         }
     }
     
-    private func importIpa() {
+    private func importCert() {
         documentPickerDelegate = DocumentPickerDelegate { selectedURL in
-            self.selectedIpaURL = selectedURL
+            self.selectedCertURL = selectedURL
             
             do {
                 let destinationURL = URL(fileURLWithPath: documentsPath).appendingPathComponent(selectedURL!.lastPathComponent)
                 try FileManager.default.copyItem(at: selectedURL!, to: destinationURL) // FORCE UNWAP RRAHHH
                 refreshFiles()
             } catch {
-                UIApplication.shared.alert(title: "Error Importing IPA!", body: "Error: \(error.localizedDescription)")
+                UIApplication.shared.alert(title: "Error Importing Certificate!", body: "Error: \(error.localizedDescription)")
             }
         }
-        showDocumentPickerIPA(delegate: documentPickerDelegate!)
+        showDocumentPickerCert(delegate: documentPickerDelegate!)
     }
     
-    private func extractAppInfo(from ipaPath: String) async -> (appName: String?, appVersion: String?, icon: UIImage?) {
-        let fileURL = URL(fileURLWithPath: ipaPath)
-        
-        let unzipPath = NSTemporaryDirectory() + UUID().uuidString
-        let unzipURL = URL(fileURLWithPath: unzipPath)
-        
-        do {
-            try FileManager.default.createDirectory(at: unzipURL, withIntermediateDirectories: true, attributes: nil)
-            try FileManager.default.unzipItem(at: fileURL, to: unzipURL)
-            
-            defer {
-                try? FileManager.default.removeItem(at: unzipURL)
-            }
-            
-            let payloadURL = unzipURL.appendingPathComponent("Payload")
-            let payloadContents = try FileManager.default.contentsOfDirectory(at: payloadURL, includingPropertiesForKeys: nil)
-            
-            for url in payloadContents {
-                if url.pathExtension == "app" {
-                    let appName = PlistHelper.extractAppName(from: url)
-                    let appVersion = PlistHelper.extractAppVersion(from: url)
-                    let icon = extractIcon(from: url)
-                    return (appName, appVersion, icon)
-                }
-            }
-        } catch {
-            print("Error extracting app info: \(error)")
-        }
-        
-        return (nil, nil, nil)
-    }
-    
-    private func extractIcon(from appBundleURL: URL) -> UIImage? {
-        let iconFiles = ["AppIcon60x60@2x.png", "AppIcon76x76@2x.png", "AppIcon120x120.png", "AppIcon180x180.png"]
-        
-        for iconFile in iconFiles {
-            let iconURL = appBundleURL.appendingPathComponent(iconFile)
-            if FileManager.default.fileExists(atPath: iconURL.path), let image = UIImage(contentsOfFile: iconURL.path) {
-                return image
-            }
-        }
-        
-        return nil
-    }
-    
-    private func appStack(appName: String, ipaName: String, appVersion: String, fileSize: String, icon: UIImage?) -> some View {
+    private func certStack(appName: String, certName: String, appVersion: String, fileSize: String, icon: UIImage?) -> some View {
         HStack {
             if let icon = icon {
                 Image(uiImage: icon)
@@ -213,7 +160,7 @@ struct ApplicationView: View {
             }
             
             VStack(alignment: .leading, spacing: 1) {
-                Text("\(ipaName) | \(appName)")
+                Text("\(certName) | \(appName)")
                     .bold()
                     .font(.system(size: 16))
                 Text("\(appVersion) • \(fileSize)")
@@ -232,5 +179,5 @@ struct ApplicationView: View {
 }
 
 #Preview {
-    ApplicationView()
+    CertificatesView()
 }

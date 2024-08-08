@@ -21,6 +21,7 @@
 		FE48ED5D2C611DCE00B35B1C /* ZSignApple in Frameworks */ = {isa = PBXBuildFile; productRef = FE48ED5C2C611DCE00B35B1C /* ZSignApple */; };
 		FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */; };
 		FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED602C6123B400B35B1C /* SettingsView.swift */; };
+		FE590FB02C65751F0049E836 /* CertificatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE590FAF2C65751F0049E836 /* CertificatesView.swift */; };
 		FEA233E42C612A2F006727B1 /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA233E32C612A2F006727B1 /* Signer.swift */; };
 		FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */; };
 		FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C52C618B850087AE12 /* UIAlert++.swift */; };
@@ -59,6 +60,7 @@
 		FE0562C32C6035B6008201BA /* QuickSignUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSignUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
 		FE48ED602C6123B400B35B1C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FE590FAF2C65751F0049E836 /* CertificatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificatesView.swift; sourceTree = "<group>"; };
 		FEA233E32C612A2F006727B1 /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
 		FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
 		FEBBC3C52C618B850087AE12 /* UIAlert++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert++.swift"; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				FE0562A82C6035B2008201BA /* ContentView.swift */,
 				FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */,
+				FE590FAF2C65751F0049E836 /* CertificatesView.swift */,
 				FE48ED602C6123B400B35B1C /* SettingsView.swift */,
 				5DC31BEF2C623FE800261B08 /* AppIconView.swift */,
 			);
@@ -328,6 +331,7 @@
 				FE0562A72C6035B2008201BA /* QuickSignApp.swift in Sources */,
 				FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */,
 				FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */,
+				FE590FB02C65751F0049E836 /* CertificatesView.swift in Sources */,
 				FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,7 +503,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuickSign/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6X2LMXRYXS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickSign/Info.plist;
@@ -508,8 +512,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -536,7 +540,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuickSign/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6X2LMXRYXS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickSign/Info.plist;
@@ -545,8 +549,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
