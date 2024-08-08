@@ -20,24 +20,19 @@ struct ApplicationView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if isLoading {
-                    ProgressView("Loading...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else {
-                    List {
-                        Section {
-                            ForEach(ipas) { ipa in
-                                if ipa.ipaName.hasSuffix(".ipa") {
-                                    appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
-                                } else {
-                                    Text(ipa.ipaName)
-                                }
+                List {
+                    Section {
+                        ForEach(ipas) { ipa in
+                            if ipa.ipaName.hasSuffix(".ipa") {
+                                appStack(appName: ipa.appName, ipaName: ipa.ipaName, appVersion: ipa.appVersion, fileSize: ipa.ipaSize, icon: ipa.icon)
+                            } else {
+                                Text(ipa.ipaName)
                             }
-                            .onDelete(perform: deleteItems)
-                        } footer: {
-                            if ipas.isEmpty {
-                                Text("You don't have any IPAs imported.")
-                            }
+                        }
+                        .onDelete(perform: deleteItems)
+                    } footer: {
+                        if ipas.isEmpty && !isLoading {
+                            Text("You don't have any IPAs imported.")
                         }
                     }
                 }
@@ -54,6 +49,25 @@ struct ApplicationView: View {
                     }
                 }
             }
+            .overlay(
+                Group {
+                    if isLoading {
+                        VStack {
+                            Spacer()
+                            ProgressView("Loading...")
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .padding()
+                                .background(Color("LoadingColor").opacity(0.8)) // this color only work on dark mode for now
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }
+                        .frame(maxWidth: 150, maxHeight: 150)
+                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+                    }
+                }
+            )
+            
             .navigationTitle("QuickSign")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: refreshFiles)
