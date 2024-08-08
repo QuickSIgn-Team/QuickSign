@@ -26,7 +26,9 @@ class Signer {
             try fm.copyItem(at: ipaURL, to: URL(fileURLWithPath: "\(documentsPath)/temp/temp.ipa"))
             try fm.unzipItem(at: URL(fileURLWithPath: "\(documentsPath)/temp/temp.ipa"), to: URL(fileURLWithPath: "\(documentsPath)/temp/tempext"))
             
-            zsign("\(documentsPath)/temp/tempext/Payload/Delta.app", "\(documentsPath)/cert.p12", "\(documentsPath)/cert.p12", "\(documentsPath)/cert.mobileprovision", "iApps0101", "org.haxi0.Delta", "Delta")
+            zsign("\(documentsPath)/temp/tempext/Payload/Delta.app", "\(documentsPath)/cert.p12", "\(documentsPath)/cert.p12", "\(documentsPath)/cert.mobileprovision", "iApps0101", "", "")
+            
+            try fm.zipItem(at: URL(fileURLWithPath: "\(documentsPath)/temp/tempext/Payload"), to: URL(fileURLWithPath: "\(documentsPath)/temp/tempext/tempsigned.ipa"))
             
             return true
         } catch {
