@@ -26,7 +26,7 @@ struct CertificatesView: View {
                     Section {
                         ForEach(certs) { cert in
                             if cert.certName.hasSuffix(".p12") || cert.certName.hasSuffix(".mobileprovision") {
-                                Text(cert.certName)
+                                certStack(certName: cert.certName)
                             }
                         }
                         .onDelete(perform: deleteItems)
@@ -99,7 +99,7 @@ struct CertificatesView: View {
         do {
             let folderContents = try FileManager.default.contentsOfDirectory(atPath: documentsPath)
             let filteredContents = folderContents.filter { $0.hasSuffix(".p12") || $0.hasSuffix(".mobileprovision") }
-
+            
             self.certs = await withTaskGroup(of: DocumentsFolderCert?.self) { group in
                 for item in filteredContents {
                     group.addTask {
@@ -133,47 +133,12 @@ struct CertificatesView: View {
         showDocumentPickerCert(delegate: documentPickerDelegate!)
     }
     
-    private func certStack(appName: String, certName: String, appVersion: String, fileSize: String, icon: UIImage?) -> some View {
+    private func certStack(certName: String) -> some View {
         HStack {
-            if let icon = icon {
-                Image(uiImage: icon)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
-                    .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(.white, lineWidth: 0.5)
-                            .opacity(0.3)
-                    )
-            } else {
-                Image("DefaultIcon")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
-                    .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(.white, lineWidth: 0.5)
-                            .opacity(0.3)
-                    )
-            }
-            
-            VStack(alignment: .leading, spacing: 1) {
-                Text("\(certName) | \(appName)")
-                    .bold()
-                    .font(.system(size: 16))
-                Text("\(appVersion) • \(fileSize)")
-                    .font(.system(size: 16))
-                    .foregroundColor(.gray)
-            }
-            
-            Spacer()
-            Button("Sign") {
-                // sign action here...
-            }
-            .buttonStyle(.bordered)
-            .cornerRadius(20)
+            Image(systemName: "doc.fill")
+            Text(certName)
+                .bold()
+                .font(.system(size: 16))
         }
     }
 }
