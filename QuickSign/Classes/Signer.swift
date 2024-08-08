@@ -8,7 +8,6 @@
 import ZSign
 import ZIPFoundation
 import Foundation
-import Telegraph
 
 class Signer {
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
@@ -37,12 +36,5 @@ class Signer {
         } catch {
             return false
         }
-    }
-    
-    func setupAndDeploy() {
-        let server = Server()
-        try! server.start(port: 9000)
-        server.serveDirectory(URL(fileURLWithPath: "\(documentsPath)/temp"), "/tempWeb")
-        server.route(.GET, "status") { (.ok, "Server is running") }
     }
 }

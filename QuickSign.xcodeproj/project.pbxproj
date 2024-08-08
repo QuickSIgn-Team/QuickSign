@@ -11,6 +11,8 @@
 		5DC31BF42C62403000261B08 /* PlistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC31BF32C62403000261B08 /* PlistHelper.swift */; };
 		5DC31BF72C6240C400261B08 /* ZSignApple in Frameworks */ = {isa = PBXBuildFile; productRef = 5DC31BF62C6240C400261B08 /* ZSignApple */; };
 		5DC31BFA2C6240CD00261B08 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 5DC31BF92C6240CD00261B08 /* ZIPFoundation */; };
+		7957BC302C658C4B00FCAF4B /* Hoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7957BC2F2C658C4700FCAF4B /* Hoster.swift */; };
+		7957BC322C658C8B00FCAF4B /* PlistMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7957BC312C658C8900FCAF4B /* PlistMaker.swift */; };
 		FE0562A72C6035B2008201BA /* QuickSignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0562A62C6035B2008201BA /* QuickSignApp.swift */; };
 		FE0562A92C6035B2008201BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0562A82C6035B2008201BA /* ContentView.swift */; };
 		FE0562AB2C6035B5008201BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE0562AA2C6035B5008201BA /* Assets.xcassets */; };
@@ -49,6 +51,8 @@
 /* Begin PBXFileReference section */
 		5DC31BEF2C623FE800261B08 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		5DC31BF32C62403000261B08 /* PlistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlistHelper.swift; path = QuickSign/Views/PlistHelper.swift; sourceTree = SOURCE_ROOT; };
+		7957BC2F2C658C4700FCAF4B /* Hoster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoster.swift; sourceTree = "<group>"; };
+		7957BC312C658C8900FCAF4B /* PlistMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistMaker.swift; sourceTree = "<group>"; };
 		FE0562A32C6035B2008201BA /* QuickSign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickSign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE0562A62C6035B2008201BA /* QuickSignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSignApp.swift; sourceTree = "<group>"; };
 		FE0562A82C6035B2008201BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,6 +101,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7957BC2E2C658C4100FCAF4B /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				7957BC2F2C658C4700FCAF4B /* Hoster.swift */,
+				7957BC312C658C8900FCAF4B /* PlistMaker.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
 		FE05629A2C6035B2008201BA = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +183,7 @@
 		FEA233E22C612A00006727B1 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7957BC2E2C658C4100FCAF4B /* Server */,
 				FEA233E32C612A2F006727B1 /* Signer.swift */,
 				FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */,
 				5DC31BF32C62403000261B08 /* PlistHelper.swift */,
@@ -329,6 +343,7 @@
 			files = (
 				FEA233E42C612A2F006727B1 /* Signer.swift in Sources */,
 				5DC31BF42C62403000261B08 /* PlistHelper.swift in Sources */,
+				7957BC302C658C4B00FCAF4B /* Hoster.swift in Sources */,
 				5DC31BF02C623FE800261B08 /* AppIconView.swift in Sources */,
 				FE0562A92C6035B2008201BA /* ContentView.swift in Sources */,
 				FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */,
@@ -337,6 +352,7 @@
 				FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */,
 				FE590FB02C65751F0049E836 /* CertificatesView.swift in Sources */,
 				FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */,
+				7957BC322C658C8B00FCAF4B /* PlistMaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
