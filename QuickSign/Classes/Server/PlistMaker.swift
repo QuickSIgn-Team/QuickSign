@@ -4,11 +4,12 @@
 //
 //  Created by Constantin Clerc on 9/8/24.
 //
+//  This doesn't save, but simply return the plist adjusted to your parameters
 
 import Foundation
 
 func generatePlist(bundleID: String, name: String, version: String) -> Data? {
-    let urlFrServer = "http://localhost:9000/tempWeb" //im lazy sorry haxi
+    let urlFrServer = "http://localhost:9000/tempWeb" // im lazy sorry haxi
     let plist: [String: Any] = [
         "items": [
             [
@@ -23,7 +24,7 @@ func generatePlist(bundleID: String, name: String, version: String) -> Data? {
                     ],
                     [
                         "kind": "full-size-image",
-                        "url": "\(urlFrServer)/pckf.png"
+                        "url": "\(urlFrServer)/pck.png" // this totally can be the same, ios doesnt mind
                     ]
                 ],
                 "metadata": [
