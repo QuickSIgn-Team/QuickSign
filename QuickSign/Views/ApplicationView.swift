@@ -15,6 +15,7 @@ struct ApplicationView: View {
     @State private var documentPickerDelegate: DocumentPickerDelegate?
     @State private var ipas: [DocumentsFolderIPA] = []
     @State private var isLoading = false
+    let sig = Signer.shared
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     
     var body: some View {
@@ -68,7 +69,10 @@ struct ApplicationView: View {
             
             .navigationTitle("Applications")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear(perform: refreshFiles)
+            .onAppear {
+                refreshFiles()
+                checkTemp()
+            }
         }
     }
     
@@ -123,6 +127,19 @@ struct ApplicationView: View {
         } catch {
             print("Error reading directory: \(error.localizedDescription)")
             self.ipas = []
+        }
+    }
+    
+    private func checkTemp() {
+        let tempDir = "\(documentsPath)/temp"
+        var isDirectory: ObjCBool = true
+        
+        do {
+            if FileManager.default.fileExists(atPath: tempDir, isDirectory: &isDirectory) {
+                try FileManager.default.removeItem(atPath: tempDir)
+            }
+        } catch {
+            UIApplication.shared.alert(title: "Error Deleting temp!", body: "Error: \(error.localizedDescription)")
         }
     }
     
@@ -223,7 +240,13 @@ struct ApplicationView: View {
             
             Spacer()
             Button("Sign") {
-                // sign action here...
+                let signIpa = sig.signIpa(ipaURL: URL(fileURLWithPath: "\(documentsPath)/\(ipaName)"), certURL: URL(fileURLWithPath: "\(documentsPath)/cert.p12"))
+                
+                if signIpa {
+                    UIApplication.shared.alert(title: "success", body: "ok")
+                } else {
+                    UIApplication.shared.alert(title: "error", body: "not ok")
+                }
             }
             .buttonStyle(.bordered)
             .cornerRadius(20)
