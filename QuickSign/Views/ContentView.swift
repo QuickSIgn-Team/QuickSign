@@ -20,7 +20,7 @@ struct ContentView: View {
                 }
         }
         .onAppear {
-            // Big thanks to this comment on Reddit https://www.reddit.com/r/SwiftUI/comments/p8obef/comment/hdqjc0a/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+            // Big thanks to this comment on Reddit https://www.reddit.com/r/SwiftUI/comments/p8obef/comment/hdqjc0a/
             let tabBarAppearance = UITabBarAppearance()
             let navigationBarAppearance = UINavigationBarAppearance()
             UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance

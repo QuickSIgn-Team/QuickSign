@@ -2,14 +2,15 @@ import UIKit
 import MobileCoreServices
 
 class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
-    var onDocumentPicked: (URL) -> Void
+    var onDocumentPicked: (URL?) -> Void
     
-    init(onDocumentPicked: @escaping (URL) -> Void) {
+    init(onDocumentPicked: @escaping (URL?) -> Void) {
         self.onDocumentPicked = onDocumentPicked
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let selectedURL = urls.first else {
+            onDocumentPicked(nil)
             return
         }
         
@@ -23,9 +24,11 @@ class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
             onDocumentPicked(selectedURL)
         } else {
             print("Could not access security scoped resource")
+            onDocumentPicked(nil)
         }
     }
 }
+
 
 func showDocumentPicker(delegate: DocumentPickerDelegate) {
     let fileTypes = ["com.apple.itunes.ipa", "com.rsa.pkcs-12", "com.apple.mobileprovision"]
