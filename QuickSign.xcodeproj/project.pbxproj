@@ -22,6 +22,7 @@
 		FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */; };
 		FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED602C6123B400B35B1C /* SettingsView.swift */; };
 		FE590FB02C65751F0049E836 /* CertificatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE590FAF2C65751F0049E836 /* CertificatesView.swift */; };
+		FE590FB32C658A710049E836 /* Telegraph in Frameworks */ = {isa = PBXBuildFile; productRef = FE590FB22C658A710049E836 /* Telegraph */; };
 		FEA233E42C612A2F006727B1 /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA233E32C612A2F006727B1 /* Signer.swift */; };
 		FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */; };
 		FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C52C618B850087AE12 /* UIAlert++.swift */; };
@@ -75,6 +76,7 @@
 				FEF6863B2C61A95400D6B2C4 /* ZSignApple in Frameworks */,
 				5DC31BF72C6240C400261B08 /* ZSignApple in Frameworks */,
 				5DC31BFA2C6240CD00261B08 /* ZIPFoundation in Frameworks */,
+				FE590FB32C658A710049E836 /* Telegraph in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +206,7 @@
 				FEF6863A2C61A95400D6B2C4 /* ZSignApple */,
 				5DC31BF62C6240C400261B08 /* ZSignApple */,
 				5DC31BF92C6240CD00261B08 /* ZIPFoundation */,
+				FE590FB22C658A710049E836 /* Telegraph */,
 			);
 			productName = QuickSign;
 			productReference = FE0562A32C6035B2008201BA /* QuickSign.app */;
@@ -280,6 +283,7 @@
 			packageReferences = (
 				5DC31BF52C6240C400261B08 /* XCRemoteSwiftPackageReference "zsign-ios" */,
 				5DC31BF82C6240CD00261B08 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				FE590FB12C658A710049E836 /* XCRemoteSwiftPackageReference "Telegraph" */,
 			);
 			productRefGroup = FE0562A42C6035B2008201BA /* Products */;
 			projectDirPath = "";
@@ -696,6 +700,14 @@
 				minimumVersion = 0.9.19;
 			};
 		};
+		FE590FB12C658A710049E836 /* XCRemoteSwiftPackageReference "Telegraph" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Building42/Telegraph.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.40.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -712,6 +724,11 @@
 		FE48ED5C2C611DCE00B35B1C /* ZSignApple */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZSignApple;
+		};
+		FE590FB22C658A710049E836 /* Telegraph */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE590FB12C658A710049E836 /* XCRemoteSwiftPackageReference "Telegraph" */;
+			productName = Telegraph;
 		};
 		FEF6863A2C61A95400D6B2C4 /* ZSignApple */ = {
 			isa = XCSwiftPackageProductDependency;
