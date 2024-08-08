@@ -8,11 +8,11 @@
 import Telegraph
 import Foundation
 
-func setupAndDeploy() {
+func runServer() {
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     
     let server = Server()
     try! server.start(port: 9000)
-    server.serveDirectory(URL(fileURLWithPath: "\(documentsPath)/temp"), "/tempWeb")
+    server.serveDirectory(URL(fileURLWithPath: "\(documentsPath)/temp/tempext"), "/tempWeb") // we basically dont need whats in temp appart from tempext
     server.route(.GET, "status") { (.ok, "Server is running") }
 }

@@ -10,13 +10,14 @@ import Foundation
 
 func generatePlist(bundleID: String, name: String, version: String) -> Data? {
     let urlFrServer = "http://localhost:9000/tempWeb" // im lazy sorry haxi
+    // based on Signer.swift, ill gess every asset will be in tempext...
     let plist: [String: Any] = [
         "items": [
             [
                 "assets": [
                     [
                         "kind": "software-package",
-                        "url": "\(urlFrServer)/pck.ipa"
+                        "url": "\(urlFrServer)/tempsigned.ipa"
                     ],
                     [
                         "kind": "display-image",
