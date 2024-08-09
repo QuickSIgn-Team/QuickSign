@@ -18,15 +18,15 @@ func generatePlist(bundleID: String, name: String, version: String) -> Data? {
                     [
                         "kind": "software-package",
                         "url": "\(urlFrServer)/tempsigned.ipa"
-                    ],
-                    [
-                        "kind": "display-image",
-                        "url": "\(urlFrServer)/pck.png"
-                    ],
-                    [
-                        "kind": "full-size-image",
-                        "url": "\(urlFrServer)/pck.png" // this totally can be the same, ios doesnt mind
                     ]
+//                    [
+//                        "kind": "display-image",
+//                        "url": "\(urlFrServer)/pck.png"
+//                    ],
+//                    [
+//                        "kind": "full-size-image",
+//                        "url": "\(urlFrServer)/pck.png" // this totally can be the same, ios doesnt mind
+//                    ]
                 ],
                 "metadata": [
                     "bundle-identifier": bundleID,
