@@ -34,7 +34,7 @@ class Signer {
                 try? plistData.write(to: URL(fileURLWithPath: "\(documentsPath)/temp/tempext/install.plist"))
             }
             runServer()
-            
+            // to stop server, keepServerAlive = false anywhere you can
             return true
         } catch {
             return false

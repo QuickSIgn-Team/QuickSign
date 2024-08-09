@@ -13,6 +13,7 @@
 		5DC31BFA2C6240CD00261B08 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 5DC31BF92C6240CD00261B08 /* ZIPFoundation */; };
 		7957BC302C658C4B00FCAF4B /* Hoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7957BC2F2C658C4700FCAF4B /* Hoster.swift */; };
 		7957BC322C658C8B00FCAF4B /* PlistMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7957BC312C658C8900FCAF4B /* PlistMaker.swift */; };
+		7957BC372C65952E00FCAF4B /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 7957BC362C65952E00FCAF4B /* Swifter */; };
 		FE0562A72C6035B2008201BA /* QuickSignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0562A62C6035B2008201BA /* QuickSignApp.swift */; };
 		FE0562A92C6035B2008201BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0562A82C6035B2008201BA /* ContentView.swift */; };
 		FE0562AB2C6035B5008201BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE0562AA2C6035B5008201BA /* Assets.xcassets */; };
@@ -24,7 +25,6 @@
 		FE48ED5F2C611E3D00B35B1C /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED5E2C611E3D00B35B1C /* ApplicationView.swift */; };
 		FE48ED612C6123B400B35B1C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48ED602C6123B400B35B1C /* SettingsView.swift */; };
 		FE590FB02C65751F0049E836 /* CertificatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE590FAF2C65751F0049E836 /* CertificatesView.swift */; };
-		FE590FB32C658A710049E836 /* Telegraph in Frameworks */ = {isa = PBXBuildFile; productRef = FE590FB22C658A710049E836 /* Telegraph */; };
 		FEA233E42C612A2F006727B1 /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA233E32C612A2F006727B1 /* Signer.swift */; };
 		FEBBC3C22C6187A60087AE12 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C12C6187A60087AE12 /* DocumentPicker.swift */; };
 		FEBBC3C62C618B850087AE12 /* UIAlert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBBC3C52C618B850087AE12 /* UIAlert++.swift */; };
@@ -79,8 +79,8 @@
 				FE48ED5D2C611DCE00B35B1C /* ZSignApple in Frameworks */,
 				FEF6863B2C61A95400D6B2C4 /* ZSignApple in Frameworks */,
 				5DC31BF72C6240C400261B08 /* ZSignApple in Frameworks */,
+				7957BC372C65952E00FCAF4B /* Swifter in Frameworks */,
 				5DC31BFA2C6240CD00261B08 /* ZIPFoundation in Frameworks */,
-				FE590FB32C658A710049E836 /* Telegraph in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +220,7 @@
 				FEF6863A2C61A95400D6B2C4 /* ZSignApple */,
 				5DC31BF62C6240C400261B08 /* ZSignApple */,
 				5DC31BF92C6240CD00261B08 /* ZIPFoundation */,
-				FE590FB22C658A710049E836 /* Telegraph */,
+				7957BC362C65952E00FCAF4B /* Swifter */,
 			);
 			productName = QuickSign;
 			productReference = FE0562A32C6035B2008201BA /* QuickSign.app */;
@@ -297,7 +297,7 @@
 			packageReferences = (
 				5DC31BF52C6240C400261B08 /* XCRemoteSwiftPackageReference "zsign-ios" */,
 				5DC31BF82C6240CD00261B08 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				FE590FB12C658A710049E836 /* XCRemoteSwiftPackageReference "Telegraph" */,
+				7957BC352C65952E00FCAF4B /* XCRemoteSwiftPackageReference "swifter" */,
 			);
 			productRefGroup = FE0562A42C6035B2008201BA /* Products */;
 			projectDirPath = "";
@@ -529,6 +529,7 @@
 				INFOPLIST_FILE = QuickSign/Info.plist;
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This is needed to run the server.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -566,6 +567,7 @@
 				INFOPLIST_FILE = QuickSign/Info.plist;
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "Please accept this prompt, or either QuickSign won't work.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This is needed to run the server.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -716,12 +718,12 @@
 				minimumVersion = 0.9.19;
 			};
 		};
-		FE590FB12C658A710049E836 /* XCRemoteSwiftPackageReference "Telegraph" */ = {
+		7957BC352C65952E00FCAF4B /* XCRemoteSwiftPackageReference "swifter" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Building42/Telegraph.git";
+			repositoryURL = "https://github.com/httpswift/swifter";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.40.0;
+				minimumVersion = 1.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -737,14 +739,14 @@
 			package = 5DC31BF82C6240CD00261B08 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
 		};
+		7957BC362C65952E00FCAF4B /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7957BC352C65952E00FCAF4B /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
+		};
 		FE48ED5C2C611DCE00B35B1C /* ZSignApple */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZSignApple;
-		};
-		FE590FB22C658A710049E836 /* Telegraph */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FE590FB12C658A710049E836 /* XCRemoteSwiftPackageReference "Telegraph" */;
-			productName = Telegraph;
 		};
 		FEF6863A2C61A95400D6B2C4 /* ZSignApple */ = {
 			isa = XCSwiftPackageProductDependency;

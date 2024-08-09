@@ -1,31 +1,13 @@
 {
-  "originHash" : "93dda79e645ed52456ddc9407f2aa78312a937ba3b5ed87673933774dc724163",
+  "originHash" : "888e80a1da772ba167e1d2dd05b2f38ddada0f7085c0f0fc6d4858df0f11a355",
   "pins" : [
     {
-      "identity" : "cocoaasyncsocket",
+      "identity" : "swifter",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket.git",
+      "location" : "https://github.com/httpswift/swifter",
       "state" : {
-        "revision" : "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
-        "version" : "7.6.5"
-      }
-    },
-    {
-      "identity" : "httpparserc",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Building42/HTTPParserC.git",
-      "state" : {
-        "revision" : "a32b391977a17c30fceec0f38933a359dfdaf112",
-        "version" : "9.2.0"
-      }
-    },
-    {
-      "identity" : "telegraph",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Building42/Telegraph.git",
-      "state" : {
-        "revision" : "f56b6726195e271fea397b7dd11c4adc36d5a32d",
-        "version" : "0.40.0"
+        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+        "version" : "1.5.0"
       }
     },
     {

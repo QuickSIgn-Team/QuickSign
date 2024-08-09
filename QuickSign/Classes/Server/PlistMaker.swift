@@ -9,7 +9,7 @@
 import Foundation
 
 func generatePlist(bundleID: String, name: String, version: String) -> Data? {
-    let urlFrServer = "http://localhost:9000/tempWeb" // im lazy sorry haxi
+    let urlFrServer = "http://localhost:9090" // im lazy sorry haxi
     // based on Signer.swift, ill gess every asset will be in tempext...
     let plist: [String: Any] = [
         "items": [

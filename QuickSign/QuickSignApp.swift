@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+var keepServerAlive = false
+
 @main
 struct QuickSignApp: App {
     var body: some Scene {
