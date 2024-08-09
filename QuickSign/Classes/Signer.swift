@@ -30,7 +30,7 @@ class Signer {
             
             try fm.zipItem(at: URL(fileURLWithPath: "\(documentsPath)/temp/tempext/Payload"), to: URL(fileURLWithPath: "\(documentsPath)/temp/tempext/tempsigned.ipa"))
             
-            if let plistData = generatePlist(bundleID: "com.rileytestut.delta", name: "Delta", version: "1.6") {  // ill let you handle those args, haxi
+            if let plistData = generatePlist(bundleID: "com.rileytestut.Delta", name: "Delta", version: "1.6") {  // ill let you handle those args, haxi
                 try? plistData.write(to: URL(fileURLWithPath: "\(documentsPath)/temp/tempext/install.plist"))
             }
             runServer()
